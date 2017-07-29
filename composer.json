@@ -1,4 +1,20 @@
 {
+  "name": "atomwares/atom-router",
+  "type": "library",
+  "description": "Router by Atom Framework (based on nikic/FastRoute)",
+  "keywords": [
+    "atom",
+    "atomframework",
+    "php",
+    "router",
+    "psr-7"
+  ],
+  "license": "MIT",
+  "authors": [{
+    "name": "Safarov Alisher",
+    "email": "alisher.safarov@outlook.com",
+    "homepage": "http://atomframework.net"
+  }],
   "require": {
     "php": ">=5.6.0",
     "psr/http-message": "^1.0",
