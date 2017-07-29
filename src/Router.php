@@ -10,6 +10,7 @@ namespace Atom\Router;
 
 use Atom\Http\Exception\MethodNotAllowedException;
 use Atom\Http\Exception\NotFoundException;
+use Atom\Interfaces\RouterInterface;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use FastRoute\RouteParser\Std as RouteParser;
@@ -22,7 +23,7 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @package Atom\Router
  */
-class Router
+class Router implements RouterInterface
 {
     /**
      * @var Group|null
