@@ -28,7 +28,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Atom\\Router": "src/"
+      "Atom\\Router\\": "src/"
     }
   }
 }
