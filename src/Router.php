@@ -15,8 +15,9 @@ use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use FastRoute\RouteParser\Std as RouteParser;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
-use InvalidArgumentException;
 use Psr\Http\Message\ServerRequestInterface;
+use InvalidArgumentException;
+use UnexpectedValueException;
 
 /**
  * Class Router
@@ -222,39 +223,49 @@ class Router implements RouterInterface
     }
 
     /**
-     * @param string $pattern
-     * @param callable $router
-     * @param mixed|null $handler
+     * @param string|callback $patternOrCallback
+     * @param callable|null $callback
+     * @param MiddlewareInterface|MiddlewareInterface[]|callable|callable[]|null $handler
      *
      * @return $this
      */
-    public function mount($pattern, callable $router, $handler = null)
+    public function mount($patternOrCallback, callable $callback = null, $handler = null)
     {
-        if (! is_string($pattern)) {
-            throw new InvalidArgumentException(sprintf(
-                'Invalid pattern argument; must be a string, received %s',
-                (is_object($pattern) ? get_class($pattern) : gettype($pattern))
-            ));
+        if (is_callable($patternOrCallback)) {
+            $patternOrCallback($this);
+        } else {
+            if (! is_string($patternOrCallback)) {
+                throw new InvalidArgumentException(sprintf(
+                    'Invalid pattern argument; must be a string, received %s',
+                    (is_object($patternOrCallback) ? get_class($patternOrCallback) : gettype($patternOrCallback))
+                ));
+            }
+
+            if ($callback === null) {
+                throw new InvalidArgumentException(
+                    '$callback argument must be a callable if patternOrCallback argument is a string'
+                );
+            }
+
+            $router = $callback(
+                $this->setGroup(new Group(
+                    $this->group->getPattern() . $patternOrCallback,
+                    $handler,
+                    $this->group
+                ))
+            );
+
+            if (! $router instanceof Router) {
+                throw new UnexpectedValueException(sprintf(
+                    'Invalid router value; must be an instance of %s, received %s',
+                    self::class,
+                    (is_object($router) ? get_class($router) : gettype($router))
+                ));
+            }
+
+            $this->routes = array_merge($this->routes, $router->group->getRoutes());
+            $this->group = $router->group->getParent();
         }
-
-        $router = $router(
-            $this->setGroup(new Group(
-                $this->group->getPattern() . $pattern,
-                $handler,
-                $this->group
-            ))
-        );
-
-        if (! $router instanceof Router) {
-            throw new InvalidArgumentException(sprintf(
-                'Invalid router argument; must be an instance of %s, received %s',
-                self::class,
-                (is_object($router) ? get_class($router) : gettype($router))
-            ));
-        }
-
-        $this->routes = array_merge($this->routes, $router->group->getRoutes());
-        $this->group = $router->group->getParent();
 
         return $this;
     }
