@@ -9,7 +9,7 @@
 namespace Atom\Router;
 
 use Atom\Interfaces\RouteInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Psr\Http\Server\MiddlewareInterface;
 
 /**
  * Class Route

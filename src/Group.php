@@ -7,7 +7,7 @@
 
 namespace Atom\Router;
 
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Psr\Http\Server\MiddlewareInterface;
 
 /**
  * Class Group

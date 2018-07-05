@@ -14,7 +14,7 @@ use Atom\Interfaces\RouterInterface;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use FastRoute\RouteParser\Std as RouteParser;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use InvalidArgumentException;
 use UnexpectedValueException;
