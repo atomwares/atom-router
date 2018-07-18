@@ -21,10 +21,10 @@
     "psr/http-server-handler": "^1.0",
     "nikic/fast-route": "^1.0",
     "atomwares/atom-http": "^1.0",
-    "atomwares/atom-interfaces": "^1.0"
+    "atomwares/atom-interfaces": "dev-master""
   },
   "provide": {
-    "psr/http-message-implementation": "1.0"
+    "psr/http-message-implementation": "dev-master"
   },
   "autoload": {
     "psr-4": {
