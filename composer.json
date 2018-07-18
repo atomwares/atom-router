@@ -24,7 +24,7 @@
     "atomwares/atom-interfaces": "dev-master"
   },
   "provide": {
-    "psr/http-message-implementation": "dev-master"
+    "psr/http-message-implementation": "1.0"
   },
   "autoload": {
     "psr-4": {
